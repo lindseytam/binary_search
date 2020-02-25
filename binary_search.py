@@ -6,7 +6,7 @@ def find_smallest_positive(xs):
     Find the index of the smallest positive number.
     If no such index exists, return `None`.
 
-    HINT: 
+    HINT:
     This is essentially the binary search algorithm from class,
     but you're always searching for 0.
 
@@ -18,6 +18,36 @@ def find_smallest_positive(xs):
     True
     '''
 
+    left = 0
+    right = len(xs)-1
+
+    def go(left, right):
+
+        mid = (left + right) // 2
+
+        if 0 < xs[mid]:
+            right = mid-1
+
+        if 0 > xs[mid]:
+            left = mid+1
+
+        if 0 == xs[mid]:
+
+            print("mid + 1=", mid +1)
+            return mid +1
+
+        if left == right and xs[mid]<0:
+            print("None")
+            return None
+        if left == right and xs[mid]>0:
+            print("mid =", mid)
+            return mid
+
+        return go(left, right)
+
+    return go(left, right)
+
+
 
 def count_repeats(xs, x):
     '''
@@ -25,7 +55,7 @@ def count_repeats(xs, x):
     and that x is a number.
     Calculate the number of times that x occurs in xs.
 
-    HINT: 
+    HINT:
     Use the following three step procedure:
         1) use binary search to find the lowest index with a value >= x
         2) use binary search to find the lowest index with a value < x
@@ -39,7 +69,7 @@ def count_repeats(xs, x):
     >>> count_repeats([1, 2, 3], 4)
     0
     '''
-
+    return
 
 def argmin(f, lo, hi, epsilon=1e-3):
     '''
@@ -53,7 +83,7 @@ def argmin(f, lo, hi, epsilon=1e-3):
         2) For each recursive call:
             a) select two points m1 and m2 that are between lo and hi
             b) one of the 4 points (lo,m1,m2,hi) must be the smallest;
-               depending on which one is the smallest, 
+               depending on which one is the smallest,
                you recursively call your function on the interval [lo,m2] or [m1,hi]
 
     >>> argmin(lambda x: (x-5)**2, -20, 20)
@@ -61,4 +91,6 @@ def argmin(f, lo, hi, epsilon=1e-3):
     >>> argmin(lambda x: (x-5)**2, -20, 0)
     -0.00016935087808430278
     '''
+    return
 
+find_smallest_positive([1, 2, 3])
