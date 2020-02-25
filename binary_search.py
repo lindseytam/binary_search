@@ -1,5 +1,4 @@
 #!/bin/python3
-
 def find_smallest_positive(xs):
     '''
     Assume that xs is a list of numbers sorted from LOWEST to HIGHEST.
@@ -20,28 +19,32 @@ def find_smallest_positive(xs):
 
     left = 0
     right = len(xs)-1
+    if not xs:
+        print("None")
+        return None
 
     def go(left, right):
 
         mid = (left + right) // 2
+        print("right=", right, "left=", left, "MID=",mid)
 
-        if 0 < xs[mid]:
-            right = mid-1
 
-        if 0 > xs[mid]:
-            left = mid+1
-
-        if 0 == xs[mid]:
-
-            print("mid + 1=", mid +1)
-            return mid +1
-
-        if left == right and xs[mid]<0:
+        if (left == right or len(xs)==1) and xs[mid] <= 0:
             print("None")
             return None
-        if left == right and xs[mid]>0:
-            print("mid =", mid)
+        if (left == right or len(xs)==1 or right == 1) and xs[mid] > 0:
+            print("returning mid =", mid)
             return mid
+
+        if 0 < xs[mid]:
+            right = mid - 1
+
+        if 0 > xs[mid]:
+            left = mid + 1
+
+        if 0 == xs[mid]:
+            print("returning mid +1 =", mid +1)
+            return mid + 1
 
         return go(left, right)
 
@@ -93,4 +96,3 @@ def argmin(f, lo, hi, epsilon=1e-3):
     '''
     return
 
-find_smallest_positive([1, 2, 3])
