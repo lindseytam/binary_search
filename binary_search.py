@@ -98,7 +98,11 @@ def count_repeats(xs, x):
     >>> count_repeats([1, 2, 3], 4)
     0
     '''
+    test = _binary_search(xs, x)
 
+    if test is None or not xs:
+        print("returning 0")
+        return 0
 
     abs_max = xs[0]
     abs_min = xs[-1]
@@ -107,11 +111,6 @@ def count_repeats(xs, x):
     high = x
     lowest = _binary_search(xs, low)
     highest = _binary_search(xs, high)
-
-    test = _binary_search(xs, x)
-    if test is None:
-        print("returning 0")
-        return 0
 
     while lowest is None:
         if low >= abs_min - 1:
@@ -136,13 +135,14 @@ def count_repeats(xs, x):
         return len(xs) - highest
 
     print(lowest-highest)
-
+    return lowest-highest
     # print(_find_index(xs, x))
     #     return 0
     #
     # return
 
 def _binary_search(xs, x):
+    
     lo = 0
     hi = len(xs)
 
@@ -156,10 +156,8 @@ def _binary_search(xs, x):
         elif mid > 0 and xs[mid-1] == x:
             hi = mid
         else:
-            print('returning lowest index = ', mid)
             return mid
-
-    print("returning None")
+        
     return None
 
 def argmin(f, lo, hi, epsilon=1e-3):
@@ -189,6 +187,8 @@ def argmin(f, lo, hi, epsilon=1e-3):
 # count_repeats([5, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, -1],2) # should be 5
 # count_repeats([5, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, -1],5) #should be 1
 
+count_repeats([],5)
+
 # count_repeats([5, 4, 3, 3, 3, 3, 3, 3, 3, 2, 1], 3) # should be 7 WORKS
-count_repeats([1, 2, 3], 4) # should be 0 WORKS
+# count_repeats([1, 2, 3], 4) # should be 0 WORKS
 # count_repeats([1, 1, 1, 1, 1, 1, 1, 1, 1, 1],1) # should be 10 WORKS
