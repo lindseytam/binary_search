@@ -98,10 +98,10 @@ def count_repeats(xs, x):
     >>> count_repeats([1, 2, 3], 4)
     0
     '''
-    test = _binary_search(xs, x)
 
+
+    test = _binary_search(xs, x)
     if test is None or not xs:
-        print("returning 0")
         return 0
 
     abs_max = xs[0]
@@ -118,9 +118,6 @@ def count_repeats(xs, x):
             lowest = _binary_search(xs, low)
         else:
             lowest = _binary_search(xs, x)
-            # lowest = _binary_search(xs, x)
-            # print("else, lowest = ", lowest)
-
 
     while highest is None:
         if high > abs_max:
@@ -129,20 +126,14 @@ def count_repeats(xs, x):
             high += 1
             highest = _binary_search(xs, x)
 
-    print("highest=", highest, "and lowest = ", lowest)
     if highest == lowest:
-        print("value len(xs) - highest= ", len(xs)- highest)
         return len(xs) - highest
 
-    print(lowest-highest)
     return lowest-highest
-    # print(_find_index(xs, x))
-    #     return 0
-    #
-    # return
+
 
 def _binary_search(xs, x):
-    
+
     lo = 0
     hi = len(xs)
 
@@ -157,7 +148,7 @@ def _binary_search(xs, x):
             hi = mid
         else:
             return mid
-        
+
     return None
 
 def argmin(f, lo, hi, epsilon=1e-3):
@@ -180,15 +171,25 @@ def argmin(f, lo, hi, epsilon=1e-3):
     >>> argmin(lambda x: (x-5)**2, -20, 0)
     -0.00016935087808430278
     '''
-    return
+
+    print("hi=", hi, "lo=", lo)
+    middle = (hi + lo)/2
+    # base case
+    if hi-lo < epsilon:
+        print("returning", hi)
+        return hi
+    else:
+        m1 = middle - middle/100000
+        m2 = middle + middle/100000
+        print("f(m1)=", f(m1), "f(m2)=", f(m2), "f(lo)=", f(lo), "f(hi)=", f(hi))
+        smallest = min(f(m1), f(m2), f(lo), f(hi))
+        if f(m2) == smallest or f(hi) == smallest:
+            print("[m2,hi]")
+            return argmin(f, m2, hi, epsilon)
+        if f(m1) == smallest or f(lo) == smallest:
+            print("[lo,m1]")
+            return argmin(f, lo, m1, epsilon)
 
 
-# count_repeats([5, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1],1) # should be 10
-# count_repeats([5, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, -1],2) # should be 5
-# count_repeats([5, 4, 3, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, -1],5) #should be 1
 
-count_repeats([],5)
-
-# count_repeats([5, 4, 3, 3, 3, 3, 3, 3, 3, 2, 1], 3) # should be 7 WORKS
-# count_repeats([1, 2, 3], 4) # should be 0 WORKS
-# count_repeats([1, 1, 1, 1, 1, 1, 1, 1, 1, 1],1) # should be 10 WORKS
+argmin(lambda x: (x-5)**2, -20, 0)
