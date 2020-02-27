@@ -1,4 +1,6 @@
 #!/bin/python3
+
+
 def find_smallest_positive(xs):
     '''
     Assume that xs is a list of numbers sorted from LOWEST to HIGHEST.
@@ -20,25 +22,17 @@ def find_smallest_positive(xs):
     left = 0
     right = len(xs)-1
     if not xs:
-        print("None")
         return None
 
     def go(left, right):
 
-
         mid = (left + right) // 2
-        print("right=", right, "left=", left, "MID=",mid)
-
 
         if (left == right or len(xs)==1) and xs[mid] <= 0:
-            print("None")
             return None
 
         if (left == right or len(xs)==1 or right == 1) and xs[mid] > 0:
-            print("returning mid =", mid)
             return mid
-
-
 
         if 0 < xs[mid]:
             right = mid
@@ -47,13 +41,42 @@ def find_smallest_positive(xs):
             left = mid + 1
 
         if 0 == xs[mid]:
-            print("returning mid +1 =", mid +1)
             return mid + 1
 
         return go(left, right)
 
     return go(left, right)
 
+
+def _find_index(xs, val):
+
+    left = 0
+    right = len(xs) - 1
+    if not xs:
+        return None
+
+    def go(left, right):
+
+        mid = (left + right) // 2
+
+        if (left == right or len(xs) == 1) and xs[mid] != val:
+            return None
+
+        if (left == right or len(xs) == 1) and xs[mid]== val:
+            return mid
+
+        if val < xs[mid]:
+            left = mid + 1
+
+        if val > xs[mid]:
+            right = mid
+
+        if val == xs[mid]:
+            return mid
+
+        return go(left, right)
+
+    return go(left, right)
 
 
 def count_repeats(xs, x):
@@ -76,7 +99,38 @@ def count_repeats(xs, x):
     >>> count_repeats([1, 2, 3], 4)
     0
     '''
-    return
+
+
+    abs_max = xs[0]
+    abs_min = xs[-1]
+
+    low = x-1
+    high = x+1
+    lowest = _find_index(xs, low)
+    highest = _find_index(xs, high)
+
+    while lowest is None:
+        if low > abs_min - 1:
+            low -= 1
+            lowest = _find_index(xs, low)
+        else:
+            lowest = 0
+
+    while highest is None:
+        if high > abs_max:
+            highest = 0
+        else:
+            high += 1
+            highest = _find_index(xs, high)
+
+    print("highest=", highest, "and lowest = ", lowest)
+
+    print(lowest-highest-1)
+
+    # print(_find_index(xs, x))
+    #     return 0
+    #
+    # return
 
 def argmin(f, lo, hi, epsilon=1e-3):
     '''
@@ -99,4 +153,5 @@ def argmin(f, lo, hi, epsilon=1e-3):
     -0.00016935087808430278
     '''
     return
+
 
