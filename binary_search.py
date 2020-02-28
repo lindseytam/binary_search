@@ -179,8 +179,8 @@ def argmin(f, lo, hi, epsilon=1e-3):
         print("returning", hi)
         return hi
     else:
-        m1 = middle - middle/100000
-        m2 = middle + middle/100000
+        m1 = middle - middle/10000000000000
+        m2 = middle + middle/10000000000000
         print("f(m1)=", f(m1), "f(m2)=", f(m2), "f(lo)=", f(lo), "f(hi)=", f(hi))
         smallest = min(f(m1), f(m2), f(lo), f(hi))
         if f(m2) == smallest or f(hi) == smallest:
@@ -191,5 +191,13 @@ def argmin(f, lo, hi, epsilon=1e-3):
             return argmin(f, lo, m1, epsilon)
 
 
+epsilon = 1e-6
+lo = 0
+hi = 1e20
+x_min = 5000
+f = lambda x: (x-x_min)**2
 
-argmin(lambda x: (x-5)**2, -20, 0)
+y =abs(argmin(f,lo,hi,epsilon)-x_min)
+print("argmin(f,lo,hi,epsilon)=", argmin(f,lo,hi,epsilon), "and y =", y)
+print(y <= epsilon)
+# abs(argmin(f,lo,hi,epsilon) - x_min) <= epsilon
